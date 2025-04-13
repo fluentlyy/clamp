@@ -3,6 +3,18 @@ const widthTo = document.getElementById("input-to");
 const button = document.getElementById("submit");
 let span = document.createElement("span");
 
+function copyText(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      document.body.appendChild(span);
+      span.textContent = "Текст успешно скопирован!";
+    })
+    .catch((error) => {
+      console.error("Ошибка копирования текста:", error);
+    });
+}
+
 button.addEventListener("click", function () {
   span.textContent = ``;
   let widthFromNum = parseInt(widthFrom.value);
@@ -15,6 +27,6 @@ button.addEventListener("click", function () {
 
   let vw = Number(((valueNum / widthFromNum) * 100).toFixed(2));
 
-  span.textContent = `clamp(${minNum}px, ${vw}vw, ${valueNum}px)`;
-  document.body.appendChild(span);
+  totalMessage = `clamp(${minNum}px, ${vw}vw, ${valueNum}px)`;
+  copyText(totalMessage);
 });
